@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DigiDoc - Your AI Health Companion</title>
+    <meta name="description" content="AI powered health symptom checker and doctor finder.">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Phosphor Icons for premium aesthetic -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Navigation Header -->
+        <header class="glass-nav">
+            <div class="nav-container">
+                <a href="#" class="logo" onclick="app.navigate('home')">
+                    <i class="ph-fill ph-heartbeat"></i>
+                    <span>DigiDoc</span>
+                </a>
+                <nav>
+                    <button class="nav-btn" onclick="app.navigate('home')">Home</button>
+                    <button class="nav-btn primary" onclick="app.navigate('symptom-checker')">Check Symptoms</button>
+                    <button class="nav-btn" onclick="app.navigate('find-doctors')">Find Doctors</button>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main id="main-content">
+            <!-- Content injected by JS -->
+        </main>
+
+        <!-- Navigation Bot (Floating Widget) -->
+        <div id="nav-bot-widget" class="nav-bot-closed">
+            <button id="nav-bot-toggle" onclick="navBot.toggle()">
+                <div class="nav-bot-icon">
+                    <i class="ph-fill ph-robot"></i>
+                </div>
+                <div class="nav-bot-tooltip">Need help navigating?</div>
+            </button>
+            <div id="nav-bot-panel" class="glass-panel">
+                <div class="nav-bot-header">
+                    <div class="nav-bot-title">
+                        <i class="ph-fill ph-robot"></i> Navigator Bot
+                    </div>
+                    <button class="close-btn" onclick="navBot.toggle()">
+                        <i class="ph ph-x"></i>
+                    </button>
+                </div>
+                <div id="nav-bot-messages" class="nav-bot-messages">
+                    <div class="message bot">
+                        Hi there! I'm here to help you use this website. Where would you like to go today?
+                    </div>
+                    <!-- Quick actions -->
+                    <div class="quick-actions">
+                        <button onclick="navBot.handleQuickAction('symptoms')">Check my symptoms</button>
+                        <button onclick="navBot.handleQuickAction('doctors')">Find a doctor near me</button>
+                    </div>
+                </div>
+                <div class="nav-bot-input-area">
+                    <input type="text" id="nav-bot-input" placeholder="Ask me anything..." onkeypress="navBot.handleInput(event)">
+                    <button onclick="navBot.sendMsg()">
+                        <i class="ph-fill ph-paper-plane-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Application Logic -->
+    <script src="js/data.js"></script>
+    <script src="js/components.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
