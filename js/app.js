@@ -37,6 +37,10 @@ const app = {
             main.innerHTML = Components.SymptomChecker();
             healthBot.init();
             navBot.setContext('symptom-checker');
+        } else if (route === 'find-medicines') {
+            main.innerHTML = Components.FindMedicines();
+            medicineFinder.init();
+            navBot.setContext('find-medicines');
         } else if (route === 'find-doctors') {
             main.innerHTML = Components.FindDoctors();
             doctorFinder.init();
@@ -80,7 +84,10 @@ const navBot = {
             this.addBotMessage("I've taken you to the AI Health Checker.");
         } else if (action === 'doctors') {
             app.navigate('find-doctors');
-            this.addBotMessage("Here is the Find Doctors page. Let me know if you want me to analyze any doctor's pros and cons!");
+            this.addBotMessage("Here is the Find Doctors page.");
+        } else if (action === 'medicines') {
+            app.navigate('find-medicines');
+            this.addBotMessage("Here is the Medicines A-Z page. You can search for medicines or conditions.");
         }
     },
 
@@ -122,11 +129,14 @@ const navBot = {
         if (text.includes('symptom') || text.includes('sick')) {
             this.addBotMessage("It sounds like you need the Symptom Checker. Shall I take you there?");
             this.handleQuickAction('symptoms');
-        } else if (text.includes('doctor') || text.includes('find')) {
+        } else if (text.includes('medicine') || text.includes('drug') || text.includes('pill')) {
+            this.addBotMessage("I can take you to the Medicines A-Z page to find what you need.");
+            this.handleQuickAction('medicines');
+        } else if (text.includes('doctor') || text.includes('find') || text.includes('clinic')) {
             this.addBotMessage("I can take you to the Find Doctors page.");
             this.handleQuickAction('doctors');
         } else {
-            this.addBotMessage("I'm here to help you navigate DigiDoc. You can ask me to go to the Symptom Checker or Find Doctors.");
+            this.addBotMessage("I'm here to help you navigate DigiDoc. You can ask me to go to the Symptom Checker, Find Medicines, or Find Doctors.");
         }
     },
 
@@ -543,7 +553,13 @@ const healthBot = {
                     </div>
                 </li>`;
             });
-            diagMsg += `</ul><br>`;
+            diagMsg += `</ul>`;
+            diagMsg += `<div style="margin-top: 1rem; margin-bottom: 1rem; padding: 1rem; background: rgba(16, 185, 129, 0.1); border-radius: 8px; border: 1px solid rgba(16, 185, 129, 0.2); text-align: center;">
+                <p style="margin-bottom: 0.8rem; font-size: 0.95rem;">You can use the Medicine Finder to research on this symptom!</p>
+                <button class="btn btn-secondary" onclick="app.navigate('find-medicines')" style="width: 100%; padding: 0.6rem;">
+                    <i class="ph-bold ph-pill"></i> Go to Medicine Finder
+                </button>
+            </div><br>`;
         }
 
         // Doctor recommendation
@@ -614,6 +630,44 @@ const healthBot = {
         const container = document.getElementById('health-chat-messages');
         container.appendChild(el);
         container.scrollTop = container.scrollHeight;
+    }
+};
+
+const medicineFinder = {
+    init() {
+        this.renderMedicines(MEDICINES_KB);
+    },
+
+    search() {
+        const inputEl = document.getElementById('medicine-input');
+        const input = inputEl ? inputEl.value.toLowerCase().trim() : '';
+        const container = document.getElementById('medicine-results');
+        
+        if (!input) {
+            this.renderMedicines(MEDICINES_KB);
+            return;
+        }
+
+        const results = MEDICINES_KB.filter(m => 
+            m.name.toLowerCase().includes(input) || 
+            m.uses.toLowerCase().includes(input) ||
+            m.type.toLowerCase().includes(input)
+        );
+
+        if (results.length > 0) {
+            this.renderMedicines(results);
+        } else {
+            container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: var(--text-secondary);">No medicines found matching "${input}". Please try a different search term.</div>`;
+        }
+    },
+
+    renderMedicines(meds) {
+        const container = document.getElementById('medicine-results');
+        if (!container) return;
+        container.innerHTML = '';
+        meds.forEach(med => {
+            container.innerHTML += Components.MedicineCard(med);
+        });
     }
 };
 

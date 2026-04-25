@@ -10,6 +10,9 @@ const Components = {
                     <button class="btn btn-primary" onclick="app.navigate('symptom-checker')">
                         <i class="ph-bold ph-stethoscope"></i> Check Symptoms
                     </button>
+                    <button class="btn btn-secondary" onclick="app.navigate('find-medicines')">
+                        <i class="ph-bold ph-pill"></i> Find Medicines
+                    </button>
                     <button class="btn btn-secondary" onclick="app.navigate('find-doctors')">
                         <i class="ph-bold ph-map-pin"></i> Find Doctors
                     </button>
@@ -106,5 +109,65 @@ const Components = {
                 <i class="ph-bold ph-robot"></i> Research with AI
             </button>
         </div>
-    `
+    `,
+
+    FindMedicines: () => `
+        <div class="fade-in">
+            <div class="doctor-finder-header">
+                <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">Medicines A-Z</h2>
+                <p style="color: var(--text-secondary); margin-bottom: 2rem;">Search for a medicine or condition to learn about its uses and side effects, referenced from the NHS.</p>
+                
+                <div class="search-bar-container">
+                    <input type="text" id="medicine-input" placeholder="Search by medicine name or condition (e.g., Ibuprofen, Pain)..." style="margin-bottom: 0;" onkeypress="if(event.key === 'Enter') medicineFinder.search()">
+                    <button class="btn btn-primary" onclick="medicineFinder.search()">
+                        <i class="ph-bold ph-magnifying-glass"></i> Search
+                    </button>
+                </div>
+            </div>
+
+            <div id="medicine-results" class="doctor-grid">
+                <!-- Medicine cards injected here -->
+            </div>
+        </div>
+    `,
+
+    MedicineCard: (med) => {
+        const encodedName = encodeURIComponent(med.name.split(' (')[0]);
+        const pharmEasyLink = `https://pharmeasy.in/search/all?name=${encodedName}`;
+        const oneMgLink = `https://www.1mg.com/search/all?name=${encodedName}`;
+        
+        return `
+        <div class="glass-panel doctor-card" style="align-items: flex-start; text-align: left;">
+            <div class="doctor-header" style="margin-bottom: 0.5rem; display: flex; align-items: center; gap: 1rem;">
+                <div class="doctor-avatar" style="background: rgba(16, 185, 129, 0.1); color: #10b981; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                    <i class="ph-fill ph-pill"></i>
+                </div>
+                <div>
+                    <h3 style="font-size: 1.2rem; margin-bottom: 0.2rem;">${med.name}</h3>
+                    <div class="doctor-specialty" style="font-size: 0.85rem; color: var(--text-secondary);">${med.type}</div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 1rem; width: 100%;">
+                <p style="font-size: 0.9rem; margin-bottom: 0.5rem;"><strong>Used for:</strong> ${med.uses}</p>
+                <p style="font-size: 0.9rem; margin-bottom: 0.8rem; color: var(--text-secondary);"><strong>Side effects:</strong> ${med.sideEffects}</p>
+                
+                <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 1rem;">
+                    <a href="${med.nhsLink}" target="_blank" class="btn btn-secondary" style="font-size:0.8rem; padding: 0.4rem 0.8rem; text-decoration:none; flex: 1; text-align: center; border-radius: 6px;">
+                        <i class="ph-bold ph-book-open"></i> Read on NHS
+                    </a>
+                </div>
+                
+                <div style="margin-top: 0.8rem; padding-top: 0.8rem; border-top: 1px solid rgba(255,255,255,0.05); display: flex; gap: 8px;">
+                    <a href="${pharmEasyLink}" target="_blank" class="btn btn-primary" style="font-size:0.75rem; padding: 0.3rem 0.6rem; text-decoration:none; flex: 1; text-align: center; border-radius: 6px;">
+                        <i class="ph-bold ph-shopping-cart"></i> PharmEasy
+                    </a>
+                    <a href="${oneMgLink}" target="_blank" class="btn btn-secondary" style="font-size:0.75rem; padding: 0.3rem 0.6rem; text-decoration:none; flex: 1; text-align: center; border-radius: 6px;">
+                        <i class="ph-bold ph-shopping-bag"></i> Tata 1mg
+                    </a>
+                </div>
+            </div>
+        </div>
+        `;
+    }
 };

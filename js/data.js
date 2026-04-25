@@ -497,3 +497,191 @@ const DISEASE_KB = [
         ]
     }
 ];
+
+// ─────────────────────────────────────────────────────────────────────────────
+// MEDICINES KNOWLEDGE BASE (NHS Sourced)
+// ─────────────────────────────────────────────────────────────────────────────
+const MEDICINES_KB = [
+    {
+        name: 'Paracetamol',
+        type: 'Painkiller',
+        uses: 'Mild to moderate pain, fever, headaches, toothaches.',
+        sideEffects: 'Rarely causes side effects if taken at the right dose. Allergic reactions possible.',
+        nhsLink: 'https://www.nhs.uk/medicines/paracetamol-for-adults/'
+    },
+    {
+        name: 'Ibuprofen',
+        type: 'NSAID (Anti-inflammatory)',
+        uses: 'Pain relief, inflammation, fever, migraines, arthritis.',
+        sideEffects: 'Upset stomach, mild heartburn, nausea, vomiting.',
+        nhsLink: 'https://www.nhs.uk/medicines/ibuprofen-for-adults/'
+    },
+    {
+        name: 'Amoxicillin',
+        type: 'Antibiotic',
+        uses: 'Bacterial infections such as chest infections, dental abscesses, and urinary tract infections (UTIs).',
+        sideEffects: 'Nausea, vomiting, diarrhea, mild skin rash.',
+        nhsLink: 'https://www.nhs.uk/medicines/amoxicillin/'
+    },
+    {
+        name: 'Omeprazole',
+        type: 'Proton Pump Inhibitor (PPI)',
+        uses: 'Indigestion, heartburn, acid reflux, stomach ulcers.',
+        sideEffects: 'Headaches, diarrhea, stomach pain, constipation, flatulence.',
+        nhsLink: 'https://www.nhs.uk/medicines/omeprazole/'
+    },
+    {
+        name: 'Cetirizine',
+        type: 'Antihistamine',
+        uses: 'Hay fever, allergies, hives, allergic conjunctivitis.',
+        sideEffects: 'Drowsiness, dry mouth, tiredness, stomach pain.',
+        nhsLink: 'https://www.nhs.uk/medicines/cetirizine/'
+    },
+    {
+        name: 'Loperamide',
+        type: 'Antidiarrheal',
+        uses: 'Short-term diarrhea, IBS-related diarrhea.',
+        sideEffects: 'Constipation, dizziness, drowsiness, dry mouth.',
+        nhsLink: 'https://www.nhs.uk/medicines/loperamide/'
+    },
+    {
+        name: 'Salbutamol',
+        type: 'Bronchodilator (Inhaler)',
+        uses: 'Asthma, COPD, shortness of breath, wheezing.',
+        sideEffects: 'Nervousness, shaking, headache, fast heartbeat, dry mouth.',
+        nhsLink: 'https://www.nhs.uk/medicines/salbutamol-inhaler/'
+    },
+    {
+        name: 'Sertraline',
+        type: 'Antidepressant (SSRI)',
+        uses: 'Depression, panic attacks, obsessive-compulsive disorder (OCD), PTSD.',
+        sideEffects: 'Nausea, diarrhea, sleep problems, dry mouth, dizziness.',
+        nhsLink: 'https://www.nhs.uk/medicines/sertraline/'
+    },
+    {
+        name: 'Aspirin',
+        type: 'Painkiller / Blood Thinner',
+        uses: 'Pain relief, reducing fever, preventing blood clots and heart attacks.',
+        sideEffects: 'Mild indigestion, increased risk of bleeding, stomach irritation.',
+        nhsLink: 'https://www.nhs.uk/medicines/aspirin-for-pain-relief/'
+    },
+    {
+        name: 'Atorvastatin',
+        type: 'Statin',
+        uses: 'Lowers cholesterol, prevents heart disease and strokes.',
+        sideEffects: 'Headaches, nausea, diarrhea, cold-like symptoms, joint/muscle pain.',
+        nhsLink: 'https://www.nhs.uk/medicines/atorvastatin/'
+    },
+    {
+        name: 'Amlodipine',
+        type: 'Calcium Channel Blocker',
+        uses: 'High blood pressure (hypertension), preventing angina (chest pain).',
+        sideEffects: 'Swollen ankles, headaches, flushing, feeling tired or dizzy.',
+        nhsLink: 'https://www.nhs.uk/medicines/amlodipine/'
+    },
+    {
+        name: 'Bisoprolol',
+        type: 'Beta Blocker',
+        uses: 'High blood pressure, heart failure, angina.',
+        sideEffects: 'Feeling tired, dizzy, cold hands/feet, slow heartbeat.',
+        nhsLink: 'https://www.nhs.uk/medicines/bisoprolol/'
+    },
+    {
+        name: 'Codeine',
+        type: 'Opiate Painkiller',
+        uses: 'Moderate to severe pain, severe diarrhea.',
+        sideEffects: 'Constipation, nausea, drowsiness, dizziness.',
+        nhsLink: 'https://www.nhs.uk/medicines/codeine/'
+    },
+    {
+        name: 'Citalopram',
+        type: 'Antidepressant (SSRI)',
+        uses: 'Depression, panic attacks.',
+        sideEffects: 'Dry mouth, sweating, sleeping problems, nausea.',
+        nhsLink: 'https://www.nhs.uk/medicines/citalopram/'
+    },
+    {
+        name: 'Diazepam',
+        type: 'Benzodiazepine',
+        uses: 'Severe anxiety, muscle spasms, seizures.',
+        sideEffects: 'Drowsiness, confusion, unsteadiness, muscle weakness.',
+        nhsLink: 'https://www.nhs.uk/medicines/diazepam/'
+    },
+    {
+        name: 'Fluoxetine (Prozac)',
+        type: 'Antidepressant (SSRI)',
+        uses: 'Depression, OCD, bulimia.',
+        sideEffects: 'Nausea, trouble sleeping, diarrhea, tiredness.',
+        nhsLink: 'https://www.nhs.uk/medicines/fluoxetine-prozac/'
+    },
+    {
+        name: 'Gabapentin',
+        type: 'Anticonvulsant',
+        uses: 'Epilepsy, nerve pain.',
+        sideEffects: 'Sleepiness, dizziness, tiredness, fever.',
+        nhsLink: 'https://www.nhs.uk/medicines/gabapentin/'
+    },
+    {
+        name: 'Lansoprazole',
+        type: 'Proton Pump Inhibitor (PPI)',
+        uses: 'Acid reflux, stomach ulcers, heartburn.',
+        sideEffects: 'Headaches, diarrhea, stomach pain, constipation.',
+        nhsLink: 'https://www.nhs.uk/medicines/lansoprazole/'
+    },
+    {
+        name: 'Levothyroxine',
+        type: 'Thyroid Hormone',
+        uses: 'Underactive thyroid (hypothyroidism).',
+        sideEffects: 'If dose is too high: palpitations, sweating, weight loss, anxiety.',
+        nhsLink: 'https://www.nhs.uk/medicines/levothyroxine/'
+    },
+    {
+        name: 'Loratadine',
+        type: 'Antihistamine',
+        uses: 'Allergies, hay fever, hives.',
+        sideEffects: 'Headache, feeling tired (less drowsy than older antihistamines).',
+        nhsLink: 'https://www.nhs.uk/medicines/loratadine/'
+    },
+    {
+        name: 'Metformin',
+        type: 'Antidiabetic',
+        uses: 'Type 2 diabetes, PCOS.',
+        sideEffects: 'Nausea, vomiting, diarrhea, stomach ache.',
+        nhsLink: 'https://www.nhs.uk/medicines/metformin/'
+    },
+    {
+        name: 'Naproxen',
+        type: 'NSAID (Anti-inflammatory)',
+        uses: 'Joint pain, muscle pain, period pain, arthritis.',
+        sideEffects: 'Confusion, headache, ringing in ears, changes in vision, tiredness.',
+        nhsLink: 'https://www.nhs.uk/medicines/naproxen/'
+    },
+    {
+        name: 'Prednisolone',
+        type: 'Corticosteroid',
+        uses: 'Allergies, inflammatory conditions, asthma, rheumatoid arthritis.',
+        sideEffects: 'Increased appetite, weight gain, trouble sleeping, mood changes.',
+        nhsLink: 'https://www.nhs.uk/medicines/prednisolone/'
+    },
+    {
+        name: 'Ramipril',
+        type: 'ACE Inhibitor',
+        uses: 'High blood pressure, heart failure, after heart attack.',
+        sideEffects: 'Dry tickly cough, dizziness, headaches, diarrhea.',
+        nhsLink: 'https://www.nhs.uk/medicines/ramipril/'
+    },
+    {
+        name: 'Simvastatin',
+        type: 'Statin',
+        uses: 'High cholesterol, preventing heart/blood vessel disease.',
+        sideEffects: 'Constipation, stomach ache, headache, muscle pain.',
+        nhsLink: 'https://www.nhs.uk/medicines/simvastatin/'
+    },
+    {
+        name: 'Tramadol',
+        type: 'Opiate Painkiller',
+        uses: 'Moderate to severe pain.',
+        sideEffects: 'Nausea, dizzy, constipated, sweaty, dry mouth.',
+        nhsLink: 'https://www.nhs.uk/medicines/tramadol/'
+    }
+];
