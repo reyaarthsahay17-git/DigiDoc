@@ -29,6 +29,13 @@ const app = {
             }
         });
 
+        // Highlight active route button
+        const activeBtn = document.querySelector(`.nav-btn[onclick="app.navigate('${route}')"]`);
+        if (activeBtn && !activeBtn.classList.contains('primary')) {
+            activeBtn.style.color = 'var(--text-primary)';
+            activeBtn.style.background = 'rgba(255, 255, 255, 0.05)';
+        }
+
         // Render view
         if (route === 'home') {
             main.innerHTML = Components.Home();
@@ -126,6 +133,13 @@ const navBot = {
             }
         }
         
+        // Check if they are asking about a medicine
+        const med = MEDICINES_KB.find(m => text.includes(m.name.toLowerCase()));
+        if (med) {
+            this.addBotMessage(`<strong>💊 ${med.name}</strong> (${med.type})<br><br><strong>Used for:</strong> ${med.uses}<br><strong>Side effects:</strong> ${med.sideEffects}<br><br><button class="btn btn-secondary" onclick="app.navigate('find-medicines')" style="padding:0.4rem 0.8rem; font-size:0.8rem; margin-top:0.5rem">Go to Medicines A-Z</button>`);
+            return;
+        }
+        
         if (text.includes('symptom') || text.includes('sick')) {
             this.addBotMessage("It sounds like you need the Symptom Checker. Shall I take you there?");
             this.handleQuickAction('symptoms');
@@ -205,6 +219,7 @@ const navBot = {
 const healthBot = {
     step: 0,
     clarificationAttempts: 0, // how many times we've looped back for more detail
+    chatHistoryHtml: '', // preserve chat history across navigation
     // Collected patient context
     profile: {
         age: null,
@@ -216,9 +231,25 @@ const healthBot = {
     },
 
     init() {
+        if (this.chatHistoryHtml) {
+            setTimeout(() => {
+                const container = document.getElementById('health-chat-messages');
+                if (container) {
+                    container.innerHTML = this.chatHistoryHtml;
+                    container.scrollTop = container.scrollHeight;
+                }
+            }, 50);
+            return;
+        }
+
         this.step = 0;
         this.clarificationAttempts = 0;
         this.profile = { age: null, gender: null, pastDiseases: '', vaccinationStatus: '', doctorDiagnosis: '', symptoms: '' };
+        
+        setTimeout(() => {
+            const container = document.getElementById('health-chat-messages');
+            if (container) this.chatHistoryHtml = container.innerHTML;
+        }, 50);
     },
 
     handleInput(e) {
@@ -628,8 +659,11 @@ const healthBot = {
 
     appendMessage(el) {
         const container = document.getElementById('health-chat-messages');
-        container.appendChild(el);
-        container.scrollTop = container.scrollHeight;
+        if (container) {
+            container.appendChild(el);
+            container.scrollTop = container.scrollHeight;
+            this.chatHistoryHtml = container.innerHTML;
+        }
     }
 };
 

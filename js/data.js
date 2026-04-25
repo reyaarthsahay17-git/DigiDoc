@@ -169,8 +169,8 @@ const DISEASE_KB = [
         selfCare: 'Rest in a quiet, dark room. Stay hydrated. Over-the-counter pain relief (ibuprofen or paracetamol) may help if taken early.',
         source: 'NHS Conditions — Migraine',
         medicines: [
-            { name: 'Ibuprofen', sideEffects: 'Upset stomach, mild heartburn, nausea, vomiting.', buyLink: 'https://pharmeasy.in/search/all?name=Ibuprofen' },
-            { name: 'Sumatriptan', sideEffects: 'Flushing, tingling, feeling warm or cold, dizziness.', buyLink: 'https://pharmeasy.in/search/all?name=Sumatriptan' }
+            { name: 'Ibuprofen', sideEffects: 'Upset stomach, mild heartburn, nausea, vomiting.' },
+            { name: 'Sumatriptan', sideEffects: 'Flushing, tingling, feeling warm or cold, dizziness.' }
         ]
     },
     {
@@ -195,7 +195,7 @@ const DISEASE_KB = [
         selfCare: 'Reduce salt and alcohol intake. Exercise regularly. Monitor blood pressure at home if possible.',
         source: 'NHS Conditions — High Blood Pressure',
         medicines: [
-            { name: 'Amlodipine', sideEffects: 'Swelling of legs/ankles, tiredness, dizziness, palpitations.', buyLink: 'https://pharmeasy.in/search/all?name=Amlodipine' }
+            { name: 'Amlodipine', sideEffects: 'Swelling of legs/ankles, tiredness, dizziness, palpitations.' }
         ]
     },
     {
@@ -221,7 +221,7 @@ const DISEASE_KB = [
         selfCare: 'Reduce sugary and processed foods. Exercise regularly. Schedule a fasting blood glucose test with your GP.',
         source: 'NHS Conditions — Type 2 Diabetes',
         medicines: [
-            { name: 'Metformin', sideEffects: 'Nausea, vomiting, stomach upset, diarrhea, weakness.', buyLink: 'https://pharmeasy.in/search/all?name=Metformin' }
+            { name: 'Metformin', sideEffects: 'Nausea, vomiting, stomach upset, diarrhea, weakness.' }
         ]
     },
     {
@@ -245,7 +245,7 @@ const DISEASE_KB = [
         selfCare: 'Use your rescue inhaler as prescribed. Avoid known triggers (smoke, pets, pollen). Keep follow-up appointments.',
         source: 'NHS Conditions — Asthma',
         medicines: [
-            { name: 'Salbutamol (Albuterol)', sideEffects: 'Nervousness, shaking, headache, mouth/throat dryness.', buyLink: 'https://pharmeasy.in/search/all?name=Salbutamol' }
+            { name: 'Salbutamol (Albuterol)', sideEffects: 'Nervousness, shaking, headache, mouth/throat dryness.' }
         ]
     },
     {
@@ -268,7 +268,7 @@ const DISEASE_KB = [
         selfCare: 'Rest and drink plenty of fluids (water, oral rehydration salts). Eat bland foods when able. Avoid dairy and spicy food.',
         source: 'NHS Inform Scotland — Gastroenteritis',
         medicines: [
-            { name: 'Loperamide', sideEffects: 'Constipation, dizziness, drowsiness, dry mouth.', buyLink: 'https://pharmeasy.in/search/all?name=Loperamide' }
+            { name: 'Loperamide', sideEffects: 'Constipation, dizziness, drowsiness, dry mouth.' }
         ]
     },
     {
@@ -291,7 +291,7 @@ const DISEASE_KB = [
         selfCare: 'This condition requires medical treatment. Rest and hydration alone are insufficient. See a doctor promptly.',
         source: 'HealthyWA — Pneumonia',
         medicines: [
-            { name: 'Amoxicillin', sideEffects: 'Nausea, vomiting, diarrhea, mild skin rash.', buyLink: 'https://pharmeasy.in/search/all?name=Amoxicillin' }
+            { name: 'Amoxicillin', sideEffects: 'Nausea, vomiting, diarrhea, mild skin rash.' }
         ]
     },
     {
@@ -314,7 +314,7 @@ const DISEASE_KB = [
         selfCare: 'Drink plenty of water. Urinate frequently. See a GP — antibiotics are usually needed.',
         source: 'NHS Conditions — Urinary Tract Infections',
         medicines: [
-            { name: 'Nitrofurantoin', sideEffects: 'Headache, dizziness, gas, upset stomach, diarrhea.', buyLink: 'https://pharmeasy.in/search/all?name=Nitrofurantoin' }
+            { name: 'Nitrofurantoin', sideEffects: 'Headache, dizziness, gas, upset stomach, diarrhea.' }
         ]
     },
     {
@@ -338,7 +338,7 @@ const DISEASE_KB = [
         selfCare: 'Keep a food diary to identify triggers. Eat smaller, regular meals. Reduce stress. Exercise regularly.',
         source: 'NHS Conditions — IBS',
         medicines: [
-            { name: 'Mebeverine', sideEffects: 'Skin rash, dry mouth, heartburn, dizziness.', buyLink: 'https://pharmeasy.in/search/all?name=Mebeverine' }
+            { name: 'Mebeverine', sideEffects: 'Skin rash, dry mouth, heartburn, dizziness.' }
         ]
     },
     {
@@ -361,7 +361,7 @@ const DISEASE_KB = [
         selfCare: 'Moisturise regularly with unperfumed cream. Avoid soaps and harsh detergents. Use lukewarm water for washing.',
         source: 'NHS Conditions — Atopic Eczema',
         medicines: [
-            { name: 'Hydrocortisone Cream', sideEffects: 'Stinging, burning, irritation, dryness or redness at the application site.', buyLink: 'https://pharmeasy.in/search/all?name=Hydrocortisone' }
+            { name: 'Hydrocortisone Cream', sideEffects: 'Stinging, burning, irritation, dryness or redness at the application site.' }
         ]
     },
     {
@@ -387,7 +387,7 @@ const DISEASE_KB = [
         selfCare: 'This may be a medical emergency. Call emergency services immediately for new or severe symptoms. Do not drive yourself.',
         source: 'NHS Conditions — Angina',
         medicines: [
-            { name: 'Glyceryl Trinitrate (GTN)', sideEffects: 'Headache, dizziness, lightheadedness, nausea, flushing.', buyLink: 'https://pharmeasy.in/search/all?name=Glyceryl+Trinitrate' }
+            { name: 'Glyceryl Trinitrate (GTN)', sideEffects: 'Headache, dizziness, lightheadedness, nausea, flushing.' }
         ]
     },
     {
@@ -414,7 +414,7 @@ const DISEASE_KB = [
         selfCare: 'Speak to someone you trust. Stay physically active. Maintain a regular sleep routine. See a GP for assessment and referral.',
         source: 'NHS Conditions — Clinical Depression',
         medicines: [
-            { name: 'Sertraline', sideEffects: 'Nausea, diarrhea, sleep problems, dry mouth, dizziness.', buyLink: 'https://pharmeasy.in/search/all?name=Sertraline' }
+            { name: 'Sertraline', sideEffects: 'Nausea, diarrhea, sleep problems, dry mouth, dizziness.' }
         ]
     },
     {
@@ -439,7 +439,7 @@ const DISEASE_KB = [
         selfCare: 'Schedule a thyroid function blood test with your GP. This is easily managed with daily medication once diagnosed.',
         source: 'NHS Conditions — Underactive Thyroid',
         medicines: [
-            { name: 'Levothyroxine', sideEffects: 'Weight changes, headache, vomiting, diarrhea, changes in appetite.', buyLink: 'https://pharmeasy.in/search/all?name=Levothyroxine' }
+            { name: 'Levothyroxine', sideEffects: 'Weight changes, headache, vomiting, diarrhea, changes in appetite.' }
         ]
     },
     {
@@ -466,7 +466,7 @@ const DISEASE_KB = [
         selfCare: 'Regular gentle exercise helps maintain mobility. Maintain a healthy weight. Over-the-counter pain relief may help for flare-ups.',
         source: 'NHS Conditions — Osteoarthritis',
         medicines: [
-            { name: 'Naproxen', sideEffects: 'Indigestion, heartburn, stomach pain, nausea, headache.', buyLink: 'https://pharmeasy.in/search/all?name=Naproxen' }
+            { name: 'Naproxen', sideEffects: 'Indigestion, heartburn, stomach pain, nausea, headache.' }
         ]
     },
     {
@@ -492,8 +492,8 @@ const DISEASE_KB = [
         selfCare: 'Rest, drink plenty of fluids, and use over-the-counter remedies for symptom relief. Wash hands regularly.',
         source: 'NHS Conditions — Common Cold',
         medicines: [
-            { name: 'Paracetamol', sideEffects: 'Nausea, stomach pain, loss of appetite, headache.', buyLink: 'https://pharmeasy.in/search/all?name=Paracetamol' },
-            { name: 'Cetirizine', sideEffects: 'Drowsiness, dry mouth, tiredness, stomach pain.', buyLink: 'https://pharmeasy.in/search/all?name=Cetirizine' }
+            { name: 'Paracetamol', sideEffects: 'Nausea, stomach pain, loss of appetite, headache.' },
+            { name: 'Cetirizine', sideEffects: 'Drowsiness, dry mouth, tiredness, stomach pain.' }
         ]
     }
 ];
