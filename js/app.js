@@ -45,7 +45,7 @@ const app = {
             // Special Navigation Bot behavior on Find Doctors page
             setTimeout(() => {
                 navBot.open();
-                navBot.addBotMessage("I see you're looking for doctors. I can help analyze the pros and cons of the doctors listed here based on Google research. Just let me know which one you are interested in!");
+                navBot.addBotMessage("I see you're looking for doctors. You can use the Google Map to find real clinics near your zip code. Let me know if you need help!");
             }, 1000);
         }
     }
@@ -126,7 +126,7 @@ const navBot = {
             this.addBotMessage("I can take you to the Find Doctors page.");
             this.handleQuickAction('doctors');
         } else {
-            this.addBotMessage("I'm here to help you navigate DigiDoc. You can ask me to go to the Symptom Checker, Find Doctors, or (if on the Doctors page) ask for pros and cons of a doctor.");
+            this.addBotMessage("I'm here to help you navigate DigiDoc. You can ask me to go to the Symptom Checker or Find Doctors.");
         }
     },
 
@@ -138,6 +138,23 @@ const navBot = {
         msg += `<strong style="color:var(--danger)">Cons:</strong><ul>`;
         doc.cons.forEach(c => msg += `<li>${c}</li>`);
         msg += `</ul>`;
+        this.addBotMessage(msg);
+    },
+
+    analyzeClinic(clinic) {
+        let msg = `<strong>🏥 ${clinic.name}</strong><br><br>`;
+        msg += `<strong>Specialty:</strong> ${clinic.specialty}<br>`;
+        msg += `<strong>Phone:</strong> ${clinic.phone}<br>`;
+        msg += `<strong>Location:</strong> ${clinic.location}<br>`;
+        msg += `<strong>About:</strong> ${clinic.about}<br><br>`;
+        
+        if (clinic.doctors && clinic.doctors.length > 0) {
+            msg += `<strong style="color:var(--primary)">Notable Doctors:</strong><ul style="padding-left:1.2rem; margin-top:0.2rem;">`;
+            clinic.doctors.forEach(d => msg += `<li>${d}</li>`);
+            msg += `</ul>`;
+        } else {
+            msg += `<em style="color:var(--text-secondary); font-size:0.85rem">No specific doctors listed in public records for this facility. We recommend calling to inquire.</em>`;
+        }
         this.addBotMessage(msg);
     },
 
@@ -504,6 +521,31 @@ const healthBot = {
         // Self-care
         diagMsg += `<strong>Self-care advice:</strong><br>${primary.selfCare}<br><br>`;
 
+        // Medicines
+        if (primary.medicines && primary.medicines.length > 0) {
+            diagMsg += `<strong style="color:var(--primary)">Common Medicines:</strong><br>`;
+            diagMsg += `<em style="font-size:0.85rem; color:var(--warning)">⚠️ Always consult a real doctor before buying these medicines to confirm your disease.</em><ul style="list-style:none; padding-left:0; margin-top:0.5rem;">`;
+            primary.medicines.forEach(med => {
+                const encodedName = encodeURIComponent(med.name.split(' (')[0]);
+                const pharmEasyLink = `https://pharmeasy.in/search/all?name=${encodedName}`;
+                const oneMgLink = `https://www.1mg.com/search/all?name=${encodedName}`;
+
+                diagMsg += `<li style="margin-bottom: 0.8rem; background: rgba(255,255,255,0.03); padding: 0.8rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);">
+                    <strong style="font-size: 1.05rem;">${med.name}</strong><br>
+                    <span style="font-size:0.85rem; color:var(--text-secondary); display:block; margin:0.3rem 0;">Side effects: ${med.sideEffects}</span>
+                    <div style="margin-top: 0.5rem; display: flex; gap: 8px; flex-wrap: wrap;">
+                        <a href="${pharmEasyLink}" target="_blank" class="btn btn-primary" style="font-size:0.8rem; padding: 0.3rem 0.8rem; text-decoration:none; display:inline-flex; align-items:center; gap:4px; border-radius: 6px;">
+                            <i class="ph-bold ph-shopping-cart"></i> Buy on PharmEasy
+                        </a>
+                        <a href="${oneMgLink}" target="_blank" class="btn btn-secondary" style="font-size:0.8rem; padding: 0.3rem 0.8rem; text-decoration:none; display:inline-flex; align-items:center; gap:4px; border-radius: 6px;">
+                            <i class="ph-bold ph-shopping-bag"></i> Buy on Tata 1mg
+                        </a>
+                    </div>
+                </li>`;
+            });
+            diagMsg += `</ul><br>`;
+        }
+
         // Doctor recommendation
         diagMsg += `<strong>Recommended specialist:</strong> ${primary.specialty}<br><br>`;
 
@@ -576,27 +618,135 @@ const healthBot = {
 };
 
 const doctorFinder = {
+    currentClinics: [],
+
     init() {
-        this.renderDoctors(DOCTORS);
+        this.search(true);
     },
 
-    search() {
-        const input = document.getElementById('location-input').value.trim();
+    async fetchRealClinicsByLocation(location) {
+        try {
+            const geoRes = await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(location)}&format=json&limit=1`);
+            const geoData = await geoRes.json();
+            if (!geoData || geoData.length === 0) return [];
+            
+            const lat = geoData[0].lat;
+            const lon = geoData[0].lon;
+
+            const overpassQuery = `
+                [out:json][timeout:10];
+                (
+                  node["amenity"="clinic"](around:15000,${lat},${lon});
+                  node["amenity"="hospital"](around:15000,${lat},${lon});
+                  node["amenity"="doctors"](around:15000,${lat},${lon});
+                );
+                out tags limit 12;
+            `;
+            
+            const overpassRes = await fetch('https://overpass-api.de/api/interpreter', {
+                method: 'POST',
+                body: overpassQuery
+            });
+            const overpassData = await overpassRes.json();
+            
+            if (overpassData && overpassData.elements) {
+                return overpassData.elements
+                    .filter(el => el.tags && el.tags.name)
+                    .map((el, index) => {
+                        const t = el.tags;
+                        let specialty = t.healthcare || t.amenity || 'General Healthcare';
+                        specialty = specialty.charAt(0).toUpperCase() + specialty.slice(1);
+                        
+                        let addr = [];
+                        if (t["addr:housenumber"]) addr.push(t["addr:housenumber"]);
+                        if (t["addr:street"]) addr.push(t["addr:street"]);
+                        if (t["addr:city"]) addr.push(t["addr:city"]);
+                        let locationStr = addr.length > 0 ? addr.join(', ') : location;
+
+                        return {
+                            id: 'real_clinic_' + index,
+                            name: t.name,
+                            specialty: specialty.replace('_', ' '),
+                            location: locationStr,
+                            phone: t.phone || t["contact:phone"] || 'Phone not available',
+                            about: t.description || `A local ${specialty.replace('_', ' ')} facility located in ${location}.`,
+                            doctors: []
+                        };
+                    });
+            }
+            return [];
+        } catch (e) {
+            console.error("Error fetching clinics:", e);
+            return [];
+        }
+    },
+
+    async search(isInit = false) {
+        const inputEl = document.getElementById('location-input');
+        const input = inputEl ? inputEl.value.trim() : '';
         const container = document.getElementById('doctor-results');
         
-        container.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 2rem;"><div class="typing-indicator" style="margin:0 auto;"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div><p style="margin-top:1rem; color: var(--text-secondary);">Searching databases...</p></div>';
+        container.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 2rem;"><div class="typing-indicator" style="margin:0 auto;"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div><p style="margin-top:1rem; color: var(--text-secondary);">Searching for real local clinics...</p></div>';
+        
+        const query = input ? `doctors+clinics+in+${encodeURIComponent(input)}` : 'doctors+clinics+near+me';
+        
+        let clinics = [];
+        if (input) {
+            clinics = await this.fetchRealClinicsByLocation(input);
+        } else {
+            // For empty input, wait to search
+            clinics = [];
+        }
+
+        this.currentClinics = clinics;
+
+        let html = `
+            <div style="grid-column: 1/-1; animation: fadeIn 0.5s ease-out; width: 100%; height: 500px; margin-bottom: 2rem;">
+                <iframe 
+                    width="100%" 
+                    height="100%" 
+                    frameborder="0" 
+                    scrolling="no" 
+                    marginheight="0" 
+                    marginwidth="0" 
+                    src="https://maps.google.com/maps?q=${query}&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                    style="border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 4px 30px rgba(0,0,0,0.1);"
+                ></iframe>
+            </div>
+        `;
+
+        if (clinics.length > 0) {
+            html += `
+            <div style="grid-column: 1/-1; margin-bottom: 1rem;">
+                <h3 style="font-size: 1.5rem; color: var(--text-primary);">Real Local Clinics</h3>
+                <p style="color: var(--text-secondary); font-size: 0.9rem;">Click on a clinic to have the AI research it for you.</p>
+            </div>
+            `;
+            clinics.forEach(c => {
+                html += Components.ClinicCard(c);
+            });
+        } else if (input) {
+            html += `
+            <div style="grid-column: 1/-1; text-align: center;">
+                <p style="color: var(--text-secondary);">Could not fetch specific clinic details for this area. Please use the map above.</p>
+            </div>
+            `;
+        }
+
+        container.innerHTML = html;
+    },
+
+    viewClinic(id) {
+        navBot.open();
+        const clinic = this.currentClinics.find(c => c.id === id);
+        if (!clinic) return;
+        navBot.addBotMessage(`You clicked on <strong>${clinic.name}</strong>. Give me a moment to research their details for you...`);
+        navBot.showTyping();
         
         setTimeout(() => {
-            this.renderDoctors(DOCTORS); // In a real app, filter based on location
-        }, 1000);
-    },
-
-    renderDoctors(docs) {
-        const container = document.getElementById('doctor-results');
-        container.innerHTML = '';
-        docs.forEach(doc => {
-            container.innerHTML += Components.DoctorCard(doc);
-        });
+            navBot.hideTyping();
+            navBot.analyzeClinic(clinic);
+        }, 1500);
     },
 
     viewDoctor(id) {

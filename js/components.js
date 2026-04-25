@@ -85,5 +85,26 @@ const Components = {
                 View Details
             </button>
         </div>
+    `,
+
+    ClinicCard: (clinic) => `
+        <div class="glass-panel doctor-card" onclick="doctorFinder.viewClinic('${clinic.id}')" style="cursor: pointer; transition: transform 0.2s ease;">
+            <div class="doctor-header" style="margin-bottom: 0.5rem;">
+                <div class="doctor-avatar" style="background: rgba(14,165,233,0.1); color: var(--primary);">
+                    <i class="ph-fill ph-hospital"></i>
+                </div>
+                <div class="doctor-info">
+                    <h3 style="font-size: 1.1rem; margin-bottom: 0.2rem;">${clinic.name}</h3>
+                    <div class="doctor-specialty" style="font-size: 0.85rem;">${clinic.specialty}</div>
+                </div>
+            </div>
+            <div class="doctor-meta" style="flex-direction: column; align-items: flex-start; gap: 0.4rem;">
+                <span style="font-size: 0.8rem;"><i class="ph-bold ph-map-pin"></i> ${clinic.location}</span>
+                <span style="font-size: 0.8rem;"><i class="ph-bold ph-phone"></i> ${clinic.phone}</span>
+            </div>
+            <button class="btn btn-primary" style="width: 100%; margin-top: 1rem; padding: 0.5rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                <i class="ph-bold ph-robot"></i> Research with AI
+            </button>
+        </div>
     `
 };

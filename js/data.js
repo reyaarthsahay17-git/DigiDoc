@@ -87,6 +87,54 @@ const DOCTORS = [
     }
 ];
 
+const CLINICS = [
+    {
+        id: 'clinic1',
+        name: 'Downtown Medical Center',
+        specialty: 'Multispecialty & General Practice',
+        location: 'Downtown, 1.2 miles away',
+        phone: '+1 (555) 123-4567',
+        about: 'A leading facility in downtown offering primary care, preventive medicine, and comprehensive diagnostics.',
+        doctors: ['Dr. Sarah Jenkins (General Practitioner)']
+    },
+    {
+        id: 'clinic2',
+        name: 'Westside Heart Clinic',
+        specialty: 'Cardiology & Vascular Health',
+        location: 'Westside, 3.5 miles away',
+        phone: '+1 (555) 987-6543',
+        about: 'Specialized clinic focused on cardiovascular diseases, hypertension management, and heart health.',
+        doctors: ['Dr. Marcus Chen (Cardiologist)']
+    },
+    {
+        id: 'clinic3',
+        name: 'Sunrise Health Group',
+        specialty: 'Internal Medicine & Telehealth',
+        location: 'Sunrise District, 2.0 miles away',
+        phone: '+1 (555) 456-7890',
+        about: 'A patient-centric group offering telehealth and in-person consultations for complex adult diseases.',
+        doctors: ['Dr. Emily Patel (Internal Medicine)']
+    },
+    {
+        id: 'clinic4',
+        name: 'Central Neurological',
+        specialty: 'Neurology',
+        location: 'Central, 4.1 miles away',
+        phone: '+1 (555) 321-0987',
+        about: 'Advanced neurological center equipped with modern diagnostic imaging and chronic condition management.',
+        doctors: ['Dr. Robert Sullivan (Neurologist)']
+    },
+    {
+        id: 'clinic5',
+        name: 'Metro Digestive Health Center',
+        specialty: 'Gastroenterology',
+        location: 'Metro Area, 3.1 miles away',
+        phone: '+1 (555) 654-3210',
+        about: 'Expert care for digestive system disorders, offering rapid endoscopy referrals and dietary guidance.',
+        doctors: ['Dr. Alan Mehta (Gastroenterologist)']
+    }
+];
+
 // ─────────────────────────────────────────────────────────────────────────────
 // DISEASE KNOWLEDGE BASE
 //
@@ -119,7 +167,11 @@ const DISEASE_KB = [
         riskFactors: { femaleHigher: true, ageRisk: null },
         redFlags: ['sudden worst headache of your life', 'stiff neck with headache', 'headache after head injury', 'confusion with headache', 'fever with severe headache'],
         selfCare: 'Rest in a quiet, dark room. Stay hydrated. Over-the-counter pain relief (ibuprofen or paracetamol) may help if taken early.',
-        source: 'NHS Conditions — Migraine'
+        source: 'NHS Conditions — Migraine',
+        medicines: [
+            { name: 'Ibuprofen', sideEffects: 'Upset stomach, mild heartburn, nausea, vomiting.', buyLink: 'https://pharmeasy.in/search/all?name=Ibuprofen' },
+            { name: 'Sumatriptan', sideEffects: 'Flushing, tingling, feeling warm or cold, dizziness.', buyLink: 'https://pharmeasy.in/search/all?name=Sumatriptan' }
+        ]
     },
     {
         name: 'Hypertension (High Blood Pressure)',
@@ -141,7 +193,10 @@ const DISEASE_KB = [
         riskFactors: { femaleHigher: false, ageRisk: 40 },
         redFlags: ['chest pain', 'sudden severe headache', 'difficulty speaking', 'numbness in face or limbs', 'sudden vision loss'],
         selfCare: 'Reduce salt and alcohol intake. Exercise regularly. Monitor blood pressure at home if possible.',
-        source: 'NHS Conditions — High Blood Pressure'
+        source: 'NHS Conditions — High Blood Pressure',
+        medicines: [
+            { name: 'Amlodipine', sideEffects: 'Swelling of legs/ankles, tiredness, dizziness, palpitations.', buyLink: 'https://pharmeasy.in/search/all?name=Amlodipine' }
+        ]
     },
     {
         name: 'Type 2 Diabetes',
@@ -164,7 +219,10 @@ const DISEASE_KB = [
         riskFactors: { femaleHigher: false, ageRisk: 45 },
         redFlags: ['extreme thirst and urination', 'sudden unexplained weight loss', 'fruity-smelling breath', 'confusion or drowsiness'],
         selfCare: 'Reduce sugary and processed foods. Exercise regularly. Schedule a fasting blood glucose test with your GP.',
-        source: 'NHS Conditions — Type 2 Diabetes'
+        source: 'NHS Conditions — Type 2 Diabetes',
+        medicines: [
+            { name: 'Metformin', sideEffects: 'Nausea, vomiting, stomach upset, diarrhea, weakness.', buyLink: 'https://pharmeasy.in/search/all?name=Metformin' }
+        ]
     },
     {
         name: 'Asthma',
@@ -185,7 +243,10 @@ const DISEASE_KB = [
         riskFactors: { femaleHigher: false, ageRisk: null },
         redFlags: ['severe breathlessness preventing speech', 'lips or fingertips turning blue', 'not responding to inhaler'],
         selfCare: 'Use your rescue inhaler as prescribed. Avoid known triggers (smoke, pets, pollen). Keep follow-up appointments.',
-        source: 'NHS Conditions — Asthma'
+        source: 'NHS Conditions — Asthma',
+        medicines: [
+            { name: 'Salbutamol (Albuterol)', sideEffects: 'Nervousness, shaking, headache, mouth/throat dryness.', buyLink: 'https://pharmeasy.in/search/all?name=Salbutamol' }
+        ]
     },
     {
         name: 'Gastroenteritis (Stomach Flu)',
@@ -205,7 +266,10 @@ const DISEASE_KB = [
         riskFactors: { femaleHigher: false, ageRisk: null },
         redFlags: ['blood in vomit or stool', 'signs of dehydration (no urination for 8+ hrs)', 'symptoms lasting more than 5 days', 'high fever above 38.5°C'],
         selfCare: 'Rest and drink plenty of fluids (water, oral rehydration salts). Eat bland foods when able. Avoid dairy and spicy food.',
-        source: 'NHS Inform Scotland — Gastroenteritis'
+        source: 'NHS Inform Scotland — Gastroenteritis',
+        medicines: [
+            { name: 'Loperamide', sideEffects: 'Constipation, dizziness, drowsiness, dry mouth.', buyLink: 'https://pharmeasy.in/search/all?name=Loperamide' }
+        ]
     },
     {
         name: 'Pneumonia',
@@ -225,7 +289,10 @@ const DISEASE_KB = [
         riskFactors: { femaleHigher: false, ageRisk: 65 },
         redFlags: ['blue lips or fingertips', 'confusion', 'breathing more than 30 times per minute', 'very high fever above 39°C'],
         selfCare: 'This condition requires medical treatment. Rest and hydration alone are insufficient. See a doctor promptly.',
-        source: 'HealthyWA — Pneumonia'
+        source: 'HealthyWA — Pneumonia',
+        medicines: [
+            { name: 'Amoxicillin', sideEffects: 'Nausea, vomiting, diarrhea, mild skin rash.', buyLink: 'https://pharmeasy.in/search/all?name=Amoxicillin' }
+        ]
     },
     {
         name: 'Urinary Tract Infection (UTI)',
@@ -245,7 +312,10 @@ const DISEASE_KB = [
         riskFactors: { femaleHigher: true, ageRisk: null },
         redFlags: ['fever and back pain together', 'blood in urine', 'symptoms in men or children', 'symptoms not improving after 48 hrs'],
         selfCare: 'Drink plenty of water. Urinate frequently. See a GP — antibiotics are usually needed.',
-        source: 'NHS Conditions — Urinary Tract Infections'
+        source: 'NHS Conditions — Urinary Tract Infections',
+        medicines: [
+            { name: 'Nitrofurantoin', sideEffects: 'Headache, dizziness, gas, upset stomach, diarrhea.', buyLink: 'https://pharmeasy.in/search/all?name=Nitrofurantoin' }
+        ]
     },
     {
         name: 'Irritable Bowel Syndrome (IBS)',
@@ -266,7 +336,10 @@ const DISEASE_KB = [
         riskFactors: { femaleHigher: true, ageRisk: null },
         redFlags: ['blood in stool', 'unintentional weight loss', 'onset after age 60', 'family history of bowel cancer'],
         selfCare: 'Keep a food diary to identify triggers. Eat smaller, regular meals. Reduce stress. Exercise regularly.',
-        source: 'NHS Conditions — IBS'
+        source: 'NHS Conditions — IBS',
+        medicines: [
+            { name: 'Mebeverine', sideEffects: 'Skin rash, dry mouth, heartburn, dizziness.', buyLink: 'https://pharmeasy.in/search/all?name=Mebeverine' }
+        ]
     },
     {
         name: 'Eczema (Atopic Dermatitis)',
@@ -286,7 +359,10 @@ const DISEASE_KB = [
         riskFactors: { femaleHigher: false, ageRisk: null },
         redFlags: ['skin weeping or oozing (possible infection)', 'fever alongside a rash', 'rapidly spreading rash'],
         selfCare: 'Moisturise regularly with unperfumed cream. Avoid soaps and harsh detergents. Use lukewarm water for washing.',
-        source: 'NHS Conditions — Atopic Eczema'
+        source: 'NHS Conditions — Atopic Eczema',
+        medicines: [
+            { name: 'Hydrocortisone Cream', sideEffects: 'Stinging, burning, irritation, dryness or redness at the application site.', buyLink: 'https://pharmeasy.in/search/all?name=Hydrocortisone' }
+        ]
     },
     {
         name: 'Angina (Chest Pain)',
@@ -309,7 +385,10 @@ const DISEASE_KB = [
         riskFactors: { femaleHigher: false, ageRisk: 50 },
         redFlags: ['chest pain at rest', 'pain spreading to left arm or jaw', 'sweating with chest pain', 'pain lasting more than 15 minutes — CALL EMERGENCY SERVICES IMMEDIATELY'],
         selfCare: 'This may be a medical emergency. Call emergency services immediately for new or severe symptoms. Do not drive yourself.',
-        source: 'NHS Conditions — Angina'
+        source: 'NHS Conditions — Angina',
+        medicines: [
+            { name: 'Glyceryl Trinitrate (GTN)', sideEffects: 'Headache, dizziness, lightheadedness, nausea, flushing.', buyLink: 'https://pharmeasy.in/search/all?name=Glyceryl+Trinitrate' }
+        ]
     },
     {
         name: 'Depression',
@@ -333,7 +412,10 @@ const DISEASE_KB = [
         riskFactors: { femaleHigher: true, ageRisk: null },
         redFlags: ['thoughts of self-harm or suicide — seek immediate help', 'complete inability to function day-to-day'],
         selfCare: 'Speak to someone you trust. Stay physically active. Maintain a regular sleep routine. See a GP for assessment and referral.',
-        source: 'NHS Conditions — Clinical Depression'
+        source: 'NHS Conditions — Clinical Depression',
+        medicines: [
+            { name: 'Sertraline', sideEffects: 'Nausea, diarrhea, sleep problems, dry mouth, dizziness.', buyLink: 'https://pharmeasy.in/search/all?name=Sertraline' }
+        ]
     },
     {
         name: 'Hypothyroidism (Underactive Thyroid)',
@@ -355,7 +437,10 @@ const DISEASE_KB = [
         riskFactors: { femaleHigher: true, ageRisk: 60 },
         redFlags: ['extreme fatigue preventing daily tasks', 'significant unexplained weight gain', 'puffy face with cold intolerance'],
         selfCare: 'Schedule a thyroid function blood test with your GP. This is easily managed with daily medication once diagnosed.',
-        source: 'NHS Conditions — Underactive Thyroid'
+        source: 'NHS Conditions — Underactive Thyroid',
+        medicines: [
+            { name: 'Levothyroxine', sideEffects: 'Weight changes, headache, vomiting, diarrhea, changes in appetite.', buyLink: 'https://pharmeasy.in/search/all?name=Levothyroxine' }
+        ]
     },
     {
         name: 'Arthritis (Osteoarthritis)',
@@ -379,7 +464,10 @@ const DISEASE_KB = [
         riskFactors: { femaleHigher: true, ageRisk: 50 },
         redFlags: ['sudden severe joint swelling or redness', 'joint pain after an injury', 'fever with joint pain (possible infection)'],
         selfCare: 'Regular gentle exercise helps maintain mobility. Maintain a healthy weight. Over-the-counter pain relief may help for flare-ups.',
-        source: 'NHS Conditions — Osteoarthritis'
+        source: 'NHS Conditions — Osteoarthritis',
+        medicines: [
+            { name: 'Naproxen', sideEffects: 'Indigestion, heartburn, stomach pain, nausea, headache.', buyLink: 'https://pharmeasy.in/search/all?name=Naproxen' }
+        ]
     },
     {
         name: 'Common Cold',
@@ -402,6 +490,10 @@ const DISEASE_KB = [
         riskFactors: { femaleHigher: false, ageRisk: null },
         redFlags: ['symptoms lasting more than 10 days', 'high fever above 39°C', 'difficulty breathing', 'severe headache or ear pain'],
         selfCare: 'Rest, drink plenty of fluids, and use over-the-counter remedies for symptom relief. Wash hands regularly.',
-        source: 'NHS Conditions — Common Cold'
+        source: 'NHS Conditions — Common Cold',
+        medicines: [
+            { name: 'Paracetamol', sideEffects: 'Nausea, stomach pain, loss of appetite, headache.', buyLink: 'https://pharmeasy.in/search/all?name=Paracetamol' },
+            { name: 'Cetirizine', sideEffects: 'Drowsiness, dry mouth, tiredness, stomach pain.', buyLink: 'https://pharmeasy.in/search/all?name=Cetirizine' }
+        ]
     }
 ];
